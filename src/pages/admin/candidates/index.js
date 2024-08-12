@@ -110,6 +110,7 @@ const CandidateData = () => {
         <tbody>
           {candidates.map((candidate, index) => {
             const vacancy = vacancies.find(vacancy => vacancy.id === candidate.vacancy_id);
+            const company = companies.find(company => company.id === Number(candidate.company_id));
             console.log('Companies from SWR:', companies);
             console.log('Candidate company_id:', candidate.company_id);
             console.log('Matched company:', companies?.find(company => company.id === candidate.company_id)?.name || 'Desconocida');
@@ -127,7 +128,8 @@ const CandidateData = () => {
                     {candidate.email}
                   </a>
                 </td>
-                <td>{companies?.find(company => company.id === candidate.company_id)?.name || 'Desconocida'}</td>
+                {/* <td>{companies?.find(company => company.id === candidate.company_id)?.name || 'Desconocida'}</td> */}
+                <td>{company ? company.name : 'Desconocida'}</td>
                 <td>{vacancy?.title || 'Desconocida'}</td>
                 <td>{candidate.address}</td>
                 <td className="text-center">
