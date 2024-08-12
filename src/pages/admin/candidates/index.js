@@ -110,6 +110,9 @@ const CandidateData = () => {
         <tbody>
           {candidates.map((candidate, index) => {
             const vacancy = vacancies.find(vacancy => vacancy.id === candidate.vacancy_id);
+            console.log('Companies from SWR:', companies);
+            console.log('Candidate company_id:', candidate.company_id);
+            console.log('Matched company:', companies?.find(company => company.id === candidate.company_id)?.name || 'Desconocida');
             return (
               <tr key={index} className="hover">
                 <th>{candidate.id}</th>
