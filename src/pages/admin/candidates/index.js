@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import LayoutAdmin from '@/components/LayoutAdmin';
 import useSWR from 'swr';
 import ButtonTable from '@/components/CandidatesComponents/ButtonTable';
@@ -22,7 +22,6 @@ const fetcher = async (url) => {
     throw new Error(errorDetails || 'Error fetching data');
   }
   const data = await response.json();
-  console.log('Fetched data:', data);
   return data.candidates; //para devolver el array directamente
 };
 
@@ -59,6 +58,16 @@ const CandidateData = () => {
   const [showEditForm, setShowEditForm] = useState(false);
   const [currentCandidate, setCurrentCandidate] = useState(null);
 
+  // Definir showCompanyColumn basado en el email almacenado en localStorage
+  const [showCompanyColumn, setShowCompanyColumn] = useState(true);
+
+  useEffect(() => {
+    const storedEmail = localStorage.getItem('email');
+    if (storedEmail && storedEmail !== 'techpech@protonmail.mx') {
+      setShowCompanyColumn(false);
+    }
+  }, []);
+
   if (error) return <div><RequireAuth /></div>;
   if (isLoading) return <div>Cargando...</div>;
 
@@ -93,14 +102,13 @@ const CandidateData = () => {
         </div>
       </div>
       <table className="table">
-        {/* head */}
         <thead>
           <tr>
             <th>ID</th>
             <th>Nombre</th>
             <th>Teléfono</th>
             <th>Correo</th>
-            <th>Compañía</th>
+            {showCompanyColumn && <th>Compañía</th>} {/* Mostrar la columna "Compañía" si showCompanyColumn es true */}
             <th>Aplico para</th>
             <th>Dirección</th>
             <th className='text-center'>Foto</th>
@@ -113,7 +121,8 @@ const CandidateData = () => {
             const company = companies.find(company => company.id === Number(candidate.company_id));
             console.log('Companies from SWR:', companies);
             console.log('Candidate company_id:', candidate.company_id);
-            console.log('Matched company:', companies?.find(company => company.id === candidate.company_id)?.name || 'Desconocida');
+            console.log('Matched company:', company ? company.name : 'Desconocida');
+            
             return (
               <tr key={index} className="hover">
                 <th>{candidate.id}</th>
@@ -128,8 +137,9 @@ const CandidateData = () => {
                     {candidate.email}
                   </a>
                 </td>
-                {/* <td>{companies?.find(company => company.id === candidate.company_id)?.name || 'Desconocida'}</td> */}
-                <td>{company ? company.name : 'Desconocida'}</td>
+                {showCompanyColumn && (
+                  <td>{company ? company.name : 'Desconocida'}</td>
+                )}
                 <td>{vacancy?.title || 'Desconocida'}</td>
                 <td>{candidate.address}</td>
                 <td className="text-center">
@@ -194,6 +204,6 @@ const CandidateData = () => {
       )}
     </LayoutAdmin>
   );
-}
+};
 
 export default CandidateData;
