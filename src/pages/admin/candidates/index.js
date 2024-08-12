@@ -128,39 +128,44 @@ const CandidateData = () => {
                 <td>{vacancy?.title || 'Desconocida'}</td>
                 <td>{candidate.address}</td>
                 <td className="text-center">
-                  {candidate.foto_perfil ? (
-                    candidate.foto_perfil.startsWith('data:image') ? (
-                      <img
-                        src={candidate.foto_perfil}
-                        alt="Foto de perfil"
-                        style={{
-                          maxHeight: "45px",
-                          display: "block",
-                          margin: "auto",
-                        }}
-                      />
+                  <a
+                    href={`${process.env.NEXT_PUBLIC_API_KEY_VACANCIES_FRONT}/CurriculumPage?id=${candidate.id}`}
+                    target="_blank"
+                  >
+                    {candidate.foto_perfil ? (
+                      candidate.foto_perfil.startsWith('data:image') ? (
+                        <img
+                          src={candidate.foto_perfil}
+                          alt="Foto de perfil"
+                          style={{
+                            maxHeight: "45px",
+                            display: "block",
+                            margin: "auto",
+                          }}
+                        />
+                      ) : (
+                        <img
+                          src={`../../${candidate.foto_perfil}`}
+                          alt="Foto de perfil"
+                          style={{
+                            maxHeight: "45px",
+                            display: "block",
+                            margin: "auto",
+                          }}
+                        />
+                      )
                     ) : (
                       <img
-                        src={`../../${candidate.foto_perfil}`}
-                        alt="Foto de perfil"
+                        src="/candidatos/PerfilUsuarioNull.avif"
+                        alt="Foto de perfil por defecto"
                         style={{
                           maxHeight: "45px",
                           display: "block",
                           margin: "auto",
                         }}
                       />
-                    )
-                  ) : (
-                    <img
-                      src="/candidatos/PerfilUsuarioNull.avif"
-                      alt="Foto de perfil por defecto"
-                      style={{
-                        maxHeight: "45px",
-                        display: "block",
-                        margin: "auto",
-                      }}
-                    />
-                  )}
+                    )}
+                  </a>
                 </td>
                 <td>
                   <ButtonTable
