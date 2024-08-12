@@ -44,14 +44,18 @@ const Vacanciedata = () => {
   const [currentVacancie, setCurrentVacancie] = useState(null);
   const [canEdit, setCanEdit] = useState(false);
   const [companyID, setCompanyID] = useState(0);
+  const [showCompanyColumn, setShowCompanyColumn] = useState(false); // Nueva variable de estado
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       const decodedToken = jwtDecode(token);
       setCompanyID(decodedToken?.sub);
-      if (decodedToken.sub === 2) {
+
+      // Verifica si el email es techpech@protonmail.mx
+      if (decodedToken.sub === 2 || decodedToken.email === 'techpech@protonmail.mx') {
         setCanEdit(true);
+        setShowCompanyColumn(true); // Mostrar columna si es techpech
       }
     }
   }, []);
@@ -95,7 +99,7 @@ const Vacanciedata = () => {
             <th>Estado</th>
             <th>Categoría</th>
             <th>Título</th>
-            {/* <th>Compañía</th> */}
+            {showCompanyColumn && <th>Compañía</th>} {/* Mostrar la columna "Compañía" si es techpech */}
             <th>Descripción</th>
             <th>Tipo</th>
             <th>Requisitos</th>
@@ -110,7 +114,9 @@ const Vacanciedata = () => {
               <td>{vacancie.state}</td>
               <td>{vacancie.category}</td>
               <td>{vacancie.title}</td>
-              {/* <td>{vacancie.company_id}</td> */}
+              {showCompanyColumn && (
+                <td>{vacancie.company_name}</td>
+              )}
               <td>{vacancie.description}</td>
               <td>{vacancie.type}</td>
               <td>{vacancie.requirements}</td>
