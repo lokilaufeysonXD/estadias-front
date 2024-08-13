@@ -15,7 +15,7 @@ const JobOffer = () => {
     phone: '',
     email: '',
     address: '',
-    company_id: '2',
+    company_id: '1',
     vacancy_id: id // Aquí se agrega el ID de la vacante
   });
 
