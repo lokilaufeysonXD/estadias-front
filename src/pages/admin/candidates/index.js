@@ -117,11 +117,12 @@ const CandidateData = () => {
         </thead>
         <tbody>
           {candidates.map((candidate, index) => {
-            const vacancy = vacancies.find(vacancy => {
-              console.log('Candidate vacancy_id:', candidate.vacancy_id);
-              console.log('Checking vacancy id:', vacancy.id);
-              vacancy.id === candidate.vacancy_id});
+            // const vacancy = vacancies.find(vacancy => {
+            //   console.log('Candidate vacancy_id:', candidate.vacancy_id);
+            //   console.log('Checking vacancy id:', vacancy.id);
+            //   vacancy.id === candidate.vacancy_id});
             // const company = companies.find(company => company.id === Number(candidate.company_id));
+            const vacancy = vacancies.find(vacancy => Number(vacancy.id) === Number(candidate.vacancy_id));
             const company = companies.find(company => Number(company.id) === Number(candidate.company_id));
             
             console.log('Companies from SWR:', companies);
