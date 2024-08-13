@@ -123,6 +123,7 @@ const CandidateData = () => {
             console.log('Companies from SWR:', companies);
             console.log('Candidate company_id:', candidate.company_id);
             console.log('Matched company:', company ? company.name : 'Desconocida');
+            console.log('machet company:', vacancy ? vacancy.title : 'Desconocida')
             
             return (
               <tr key={index} className="hover">
