@@ -141,7 +141,7 @@ const CandidateData = () => {
                 {showCompanyColumn && (
                   <td>{company ? company.name : 'Desconocida'}</td>
                 )}
-                <td>{vacancy?.title || 'Desconocida'}</td>
+                <td>{vacancy ? vacancy.title : 'Desconocida'}</td>
                 <td>{candidate.address}</td>
                 <td className="text-center">
                   <a
